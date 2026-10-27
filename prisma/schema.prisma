@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+ 
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Profile {
+  id          String   @id @default("main")
+  name        String
+  headline    String
+  bio         String   @db.Text
+  location    String?
+  avatarUrl   String?
+  resumeUrl   String?
+  email       String?
+  phone       String?
+  githubUrl   String?
+  linkedinUrl String?
+  websiteUrl  String?
+  updatedAt   DateTime @updatedAt
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  summary     String   @db.Text
+  description String?  @db.Text
+  imageUrl    String?
+  liveUrl     String?
+  githubUrl   String?
+  techStack   String[]
+  featured    Boolean  @default(false)
+  published   Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Skill {
+  id        String   @id @default(cuid())
+  name      String
+  category  String
+  level     String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([name, category])
+}
+
+model Experience {
+  id          String   @id @default(cuid())
+  company     String
+  position    String
+  location    String?
+  employmentType String?
+  startDate   DateTime
+  endDate     DateTime?
+  current     Boolean  @default(false)
+  description String   @db.Text
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Education {
+  id          String   @id @default(cuid())
+  institution String
+  degree      String
+  field       String?
+  startDate   DateTime?
+  endDate     DateTime?
+  description String?  @db.Text
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String   @db.Text
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  @@index([isRead, createdAt])
+}
