@@ -1,6 +1,7 @@
 import "dotenv/config";
 import bcrypt from "bcryptjs";
-import { PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "./generated/prisma/client.js";
 import { z } from "zod";
 
 const schema = z.object({
@@ -9,7 +10,9 @@ const schema = z.object({
   ADMIN_PASSWORD: z.string().min(12)
 });
 const env = schema.parse(process.env);
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  adapter: new PrismaPg({ connectionString: env.DATABASE_URL })
+});
 
 try {
   const email = env.ADMIN_EMAIL.toLowerCase();

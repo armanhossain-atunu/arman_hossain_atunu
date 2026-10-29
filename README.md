@@ -1,6 +1,6 @@
 # Personal Portfolio Backend
 
-Express 5 + TypeScript + PostgreSQL + Prisma 6 + Zod. This is an API backend for a separate Next.js portfolio/admin dashboard.
+Express 5 + TypeScript + PostgreSQL + Prisma 7 + Zod. This is an API backend for a separate Next.js portfolio/admin dashboard.
 
 ## Requirements
 - Node.js 20+
